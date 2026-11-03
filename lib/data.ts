@@ -5,6 +5,11 @@ export type ProjectMockup =
   | "mla"
   | "surplus";
 
+export type ProjectLink = {
+  live?: string;
+  repo?: string;
+};
+
 export type Project = {
   id: string;
   index: string;
@@ -14,6 +19,8 @@ export type Project = {
   role: string;
   stack: string[];
   highlights: string[];
+  outcomes: string[];
+  links: ProjectLink;
   mockup: ProjectMockup;
   accent: string;
 };
@@ -40,6 +47,13 @@ export const projects: Project[] = [
       "Reusable component system shared across application panels",
       "Merchant workflows from catalogue management to order pipelines",
     ],
+    outcomes: [
+      "Delivered three distinct application panels — merchant, admin, and customer — as a unified product from a shared component foundation",
+      "Designed the reusable UI library that is shared across all three application surfaces, reducing duplication and ensuring visual consistency",
+      "Implemented high-performance data-dense tables for order and inventory management using Syncfusion DataGrid",
+      "Architected state management with Redux Toolkit to support complex multi-step merchant workflows",
+    ],
+    links: {},
     mockup: "orbit-mart",
     accent: "#8f7cff",
   },
@@ -58,6 +72,13 @@ export const projects: Project[] = [
       "Context-aware assistance across the codebase",
       "Measurable lift in day-to-day development productivity",
     ],
+    outcomes: [
+      "Engineered AI-assisted workflows that integrate directly into the feature development cycle — from specification through implementation and review",
+      "Built structured prompt-to-code pipelines that maintain engineering rigor while compressing iteration time",
+      "Implemented context-aware tooling that understands codebase conventions and generates consistent, reviewable output",
+      "Contributed to measurable productivity improvements in day-to-day feature delivery",
+    ],
+    links: {},
     mockup: "procalyx",
     accent: "#64e3ff",
   },
@@ -76,6 +97,13 @@ export const projects: Project[] = [
       "Maintainable, component-driven implementation",
       "Clear information hierarchy for high-volume civic content",
     ],
+    outcomes: [
+      "Delivered a scalable Next.js frontend architecture for a public-sector platform serving a high volume of citizen users",
+      "Implemented responsive, accessible interfaces that work across mobile and desktop for service discovery and navigation",
+      "Built a component-driven codebase structured for long-term maintainability by a broader engineering team",
+      "Established clear information hierarchy and navigation patterns for complex civic content and service categories",
+    ],
+    links: {},
     mockup: "pcmc",
     accent: "#5c8dff",
   },
@@ -94,6 +122,13 @@ export const projects: Project[] = [
       "Readable, high-density records and status interfaces",
       "Role-aware access to operational data",
     ],
+    outcomes: [
+      "Built the full-stack system — React frontend, Node.js/Express API, and MongoDB data layer — as an end-to-end delivery",
+      "Designed data-driven dashboards that surface actionable constituency information for operational teams",
+      "Implemented structured workflows for request intake, tracking, and status updates across the team",
+      "Engineered role-aware access controls to ensure appropriate data visibility for different user types",
+    ],
+    links: {},
     mockup: "mla",
     accent: "#f0b46a",
   },
@@ -112,6 +147,13 @@ export const projects: Project[] = [
       "Service boundaries structured for maintainability",
       "Performance-minded data access and caching strategy",
     ],
+    outcomes: [
+      "Designed and implemented REST APIs with predictable, versioned contracts for financial workflow operations",
+      "Built the MongoDB data model and integration layer with a focus on integrity and consistency for financial records",
+      "Structured service boundaries to enforce clear separation of concerns and support future scalability",
+      "Implemented Redis caching strategy to reduce database load on high-frequency read paths",
+    ],
+    links: {},
     mockup: "surplus",
     accent: "#6ee7b7",
   },
@@ -251,32 +293,43 @@ export const philosophy = [
 ] as const;
 
 export const experience = {
-  company: "Qloron Pvt. Ltd.",
-  role: "Full-Stack Developer",
+  company: "Qloron Technology Pvt. Ltd.",
+  role: "Senior MERN Stack Developer",
   focus: "MERN Stack Engineering",
-  period: "20XX — Present",
+  period: "Dec 2022 — Present",
   location: "Delhi NCR, India",
   summary:
-    "Building and maintaining full-stack web applications across the MERN stack, with a focus on frontend architecture, backend services, and enterprise-grade delivery.",
+    "Designing and delivering production web applications across React.js, Next.js, Node.js, and NestJS frontends and backend services, with a focus on frontend architecture, reusable component systems, and enterprise delivery.",
   highlights: [
-    "Full-stack MERN development across client and server",
-    "React and Next.js application development",
-    "Node.js and NestJS backend development",
-    "API integration and API design",
-    "Reusable components and frontend architecture",
-    "Performance optimization and application reliability",
-    "Enterprise application development",
+    "Full-stack MERN development across React.js, Next.js, Node.js, Express.js and NestJS",
+    "Owned implementation of enterprise workflows, reusable component systems, custom hooks, and Redux Toolkit state management",
+    "Improved application loading time by ~20% through Brotli compression with Gzip fallback for application assets",
+    "Engineered backend REST APIs, Redis caching, MongoDB aggregation pipelines, and SQL operations",
+    "Designed an AI-orchestrated feature-delivery workflow across 30+ Jira tickets with automated Playwright acceptance testing",
+    "Conducted pull-request reviews, maintained engineering standards, and formally mentored junior developers",
+    "Supported containerized deployment and operations using Docker, AWS, and Nginx",
   ],
   scope: [
     "React",
     "Next.js",
     "Node.js",
     "NestJS",
-    "MongoDB",
-    "REST APIs",
     "TypeScript",
+    "MongoDB",
+    "Redis",
+    "Docker",
+    "AWS",
   ],
 };
+
+export const education = {
+  degree: "Bachelor of Technology",
+  field: "Mechanical and Automation Engineering",
+  institution: "Dr. Akhilesh Das Gupta Institute of Technology and Management",
+  location: "New Delhi, India",
+  year: "2017 — 2021",
+  hasData: true,
+} as const;
 
 export const marqueeItems = [
   "React",

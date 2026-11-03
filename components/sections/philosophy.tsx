@@ -30,7 +30,7 @@ export function Philosophy() {
   const CurrentIcon = icons[current.icon] ?? Layers;
 
   return (
-    <Section className="overflow-hidden">
+    <Section id="philosophy" className="overflow-hidden">
       <div className="container-x">
         <div className="flex items-center gap-3">
           <Reveal>

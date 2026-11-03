@@ -217,14 +217,6 @@ export function Contact() {
                 </a>
               </div>
             </Reveal>
-
-            <Reveal delay={0.3}>
-              <p className="mt-8 max-w-sm text-[0.6875rem] leading-relaxed text-faint">
-                Contact details are placeholders — update{" "}
-                <span className="font-mono text-muted">lib/site.ts</span> with your
-                verified email and social profiles before publishing.
-              </p>
-            </Reveal>
           </div>
 
           <Reveal delay={0.1}>

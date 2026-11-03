@@ -8,7 +8,7 @@ import {
   useScroll,
   useTransform,
 } from "motion/react";
-import { ArrowUpRight, Plus } from "lucide-react";
+import { ArrowUpRight, ExternalLink, Github, Plus } from "lucide-react";
 import { useRef } from "react";
 import { projects } from "@/lib/data";
 import { SectionHeading, Section } from "@/components/ui/section";
@@ -177,6 +177,55 @@ export function Projects() {
                       </span>
                     ))}
                   </div>
+
+                  {/* Outcomes */}
+                  {projects[active].outcomes.length > 0 && (
+                    <ul className="mt-5 space-y-2 border-t border-white/[0.06] pt-5">
+                      {projects[active].outcomes.map((outcome) => (
+                        <li
+                          key={outcome}
+                          className="flex gap-2.5 text-[0.8125rem] leading-relaxed text-muted"
+                        >
+                          <span
+                            className="mt-[0.38rem] size-1 shrink-0 rounded-full"
+                            style={{ background: `${projects[active].accent}aa` }}
+                            aria-hidden="true"
+                          />
+                          {outcome}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {/* Project links — only rendered when URLs are provided */}
+                  {(projects[active].links.live || projects[active].links.repo) && (
+                    <div className="mt-5 flex flex-wrap gap-2.5">
+                      {projects[active].links.live && (
+                        <a
+                          href={projects[active].links.live}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          aria-label={`View live demo of ${projects[active].name}`}
+                          className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.09] px-4 py-2 text-[0.75rem] text-muted transition-all duration-300 hover:border-white/20 hover:text-mist"
+                        >
+                          <ExternalLink className="size-3" aria-hidden="true" />
+                          Live demo
+                        </a>
+                      )}
+                      {projects[active].links.repo && (
+                        <a
+                          href={projects[active].links.repo}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          aria-label={`View repository for ${projects[active].name}`}
+                          className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.09] px-4 py-2 text-[0.75rem] text-muted transition-all duration-300 hover:border-white/20 hover:text-mist"
+                        >
+                          <Github className="size-3" aria-hidden="true" />
+                          Repository
+                        </a>
+                      )}
+                    </div>
+                  )}
                 </motion.div>
               </AnimatePresence>
             </div>
@@ -208,72 +257,95 @@ function ProjectCard({
   });
   const y = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -18]);
 
+  const CardWrapper = project.links.live
+    ? ({ children }: { children: React.ReactNode }) => (
+        <a
+          href={project.links.live}
+          target="_blank"
+          rel="noreferrer noopener"
+          aria-label={`View ${project.name}`}
+        >
+          {children}
+        </a>
+      )
+    : ({ children }: { children: React.ReactNode }) => <>{children}</>;
+
   return (
     <Reveal delay={(index % 3) * 0.06}>
-      <article
-        ref={ref}
-        className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.07] bg-panel/40 transition-colors duration-500 hover:border-white/[0.14]"
-      >
-        <div className="relative aspect-[16/10] overflow-hidden border-b border-white/[0.06]">
-          <motion.div style={{ y }} className="absolute inset-[-4%]">
-            <div className="h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.03]">
-              <ProjectMockupView mockup={project.mockup} accent={project.accent} />
-            </div>
-          </motion.div>
-          <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-panel/60 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-          />
-          <span
-            aria-hidden="true"
-            className="absolute inset-x-0 bottom-0 h-px scale-x-0 transition-transform duration-700 group-hover:scale-x-100"
-            style={{
-              background: `linear-gradient(90deg, transparent, ${project.accent}99, transparent)`,
-            }}
-          />
-        </div>
-
-        <div className="flex flex-1 flex-col p-5">
-          <div className="flex items-center justify-between">
-            <span className="font-mono text-[0.5625rem] tracking-[0.14em] text-faint">
-              {project.index}
-            </span>
-            <span
-              className="size-1.5 rounded-full"
-              style={{ background: project.accent }}
+      <CardWrapper>
+        <article
+          ref={ref}
+          className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.07] bg-panel/40 transition-colors duration-500 hover:border-white/[0.14]"
+        >
+          <div className="relative aspect-[16/10] overflow-hidden border-b border-white/[0.06]">
+            <motion.div style={{ y }} className="absolute inset-[-4%]">
+              <div className="h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.03]">
+                <ProjectMockupView mockup={project.mockup} accent={project.accent} />
+              </div>
+            </motion.div>
+            <div
               aria-hidden="true"
+              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-panel/60 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+            />
+            <span
+              aria-hidden="true"
+              className="absolute inset-x-0 bottom-0 h-px scale-x-0 transition-transform duration-700 group-hover:scale-x-100"
+              style={{
+                background: `linear-gradient(90deg, transparent, ${project.accent}99, transparent)`,
+              }}
             />
           </div>
-          <h3 className="mt-3 text-base font-medium tracking-[-0.02em] text-mist">
-            {project.name}
-          </h3>
-          <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-faint">
-            {project.tagline}
-          </p>
-          <ul className="mt-4 space-y-1.5">
-            {project.highlights.slice(0, 2).map((item) => (
-              <li key={item} className="flex gap-2 text-[0.75rem] leading-relaxed text-muted">
-                <span
-                  className="mt-[0.4rem] size-1 shrink-0 rounded-full"
-                  style={{ background: `${project.accent}aa` }}
+
+          <div className="flex flex-1 flex-col p-5">
+            <div className="flex items-center justify-between">
+              <span className="font-mono text-[0.5625rem] tracking-[0.14em] text-faint">
+                {project.index}
+              </span>
+              <span
+                className="size-1.5 rounded-full"
+                style={{ background: project.accent }}
+                aria-hidden="true"
+              />
+            </div>
+            <h3 className="mt-3 text-base font-medium tracking-[-0.02em] text-mist">
+              {project.name}
+            </h3>
+            <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-faint">
+              {project.tagline}
+            </p>
+            <ul className="mt-4 space-y-1.5">
+              {project.highlights.slice(0, 2).map((item) => (
+                <li key={item} className="flex gap-2 text-[0.75rem] leading-relaxed text-muted">
+                  <span
+                    className="mt-[0.4rem] size-1 shrink-0 rounded-full"
+                    style={{ background: `${project.accent}aa` }}
+                    aria-hidden="true"
+                  />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <div className="mt-auto flex items-end justify-between pt-4">
+              <div className="flex flex-wrap gap-1.5">
+                {project.stack.slice(0, 3).map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-white/[0.07] px-2 py-0.5 font-mono text-[0.5rem] uppercase tracking-[0.08em] text-faint"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+              {project.links.live && (
+                <ArrowUpRight
+                  className="size-3.5 shrink-0 text-faint transition-colors duration-300 group-hover:text-mist"
                   aria-hidden="true"
                 />
-                {item}
-              </li>
-            ))}
-          </ul>
-          <div className="mt-auto flex flex-wrap gap-1.5 pt-4">
-            {project.stack.slice(0, 3).map((item) => (
-              <span
-                key={item}
-                className="rounded-full border border-white/[0.07] px-2 py-0.5 font-mono text-[0.5rem] uppercase tracking-[0.08em] text-faint"
-              >
-                {item}
-              </span>
-            ))}
+              )}
+            </div>
           </div>
-        </div>
-      </article>
+        </article>
+      </CardWrapper>
     </Reveal>
   );
 }

@@ -79,8 +79,9 @@ export function Hero() {
               className="mt-7 max-w-xl text-[0.9375rem] leading-relaxed text-muted sm:text-lg"
             >
               I&apos;m <span className="text-mist">Dhruv Parasher</span>, a
-              Full-Stack Developer with 4 years of experience creating scalable
-              applications and exceptional digital experiences.
+              Full-Stack Engineer with 4 years of experience building scalable
+              web applications, robust APIs, and modern user interfaces across
+              the MERN stack.
             </motion.p>
 
             <motion.div
@@ -136,7 +137,7 @@ export function Hero() {
             >
               {[
                 { value: "4+", label: "Years experience" },
-                { value: "MERN", label: "Core stack" },
+                { value: "5", label: "Projects shipped" },
                 { value: "Full-Stack", label: "End-to-end" },
               ].map((stat) => (
                 <div

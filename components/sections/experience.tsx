@@ -1,10 +1,10 @@
 "use client";
 
 import { motion, useReducedMotion } from "motion/react";
-import { Briefcase, Check } from "lucide-react";
+import { Briefcase, Check, GraduationCap } from "lucide-react";
 import { SectionHeading, Section } from "@/components/ui/section";
 import { Reveal, StaggerGroup, StaggerItem } from "@/components/motion/reveal";
-import { experience } from "@/lib/data";
+import { experience, education } from "@/lib/data";
 import { cn } from "@/lib/utils";
 
 export function Experience() {
@@ -26,7 +26,8 @@ export function Experience() {
         />
 
         <div className="mt-14 grid gap-10 lg:mt-20 lg:grid-cols-[0.34fr_0.66fr] lg:gap-16">
-          <div className="lg:sticky lg:top-28 lg:self-start">
+          <div className="space-y-4 lg:sticky lg:top-28 lg:self-start">
+            {/* Role card */}
             <Reveal>
               <div className="relative overflow-hidden rounded-2xl border border-white/[0.07] bg-panel/50 p-6">
                 <div
@@ -34,9 +35,20 @@ export function Experience() {
                   className="absolute -left-12 -top-12 size-40 rounded-full bg-[radial-gradient(circle,rgba(92,141,255,0.14),transparent_70%)] blur-xl"
                 />
                 <div className="relative">
-                  <span className="grid size-10 place-items-center rounded-lg border border-white/10 bg-white/[0.03]">
-                    <Briefcase className="size-4 text-violet" aria-hidden="true" />
-                  </span>
+                  <div className="flex items-start justify-between gap-3">
+                    <span className="grid size-10 place-items-center rounded-lg border border-white/10 bg-white/[0.03]">
+                      <Briefcase className="size-4 text-violet" aria-hidden="true" />
+                    </span>
+                    <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/20 bg-emerald-400/[0.07] px-2.5 py-1">
+                      <span className="relative flex size-1.5 items-center justify-center">
+                        <span className="absolute size-1.5 animate-pulse-soft rounded-full bg-emerald-400/60" />
+                        <span className="relative size-1 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
+                      </span>
+                      <span className="font-mono text-[0.5rem] uppercase tracking-[0.14em] text-emerald-400/80">
+                        Active
+                      </span>
+                    </span>
+                  </div>
                   <p className="mt-5 font-mono text-[0.625rem] uppercase tracking-[0.16em] text-faint">
                     Current role
                   </p>
@@ -54,16 +66,51 @@ export function Experience() {
                   </div>
                   <div className="mt-6 flex items-center justify-between border-t border-white/[0.06] pt-4">
                     <span className="text-[0.75rem] text-faint">Tenure</span>
-                    <span className="font-mono text-[0.6875rem] tracking-[0.06em] text-muted">
+                    <span className="font-mono text-[0.6875rem] tracking-[0.06em] text-mist">
                       {experience.period}
                     </span>
                   </div>
-                  <p className="mt-3 text-[0.625rem] leading-relaxed text-faint">
-                    Dates placeholder — update with verified employment timeline.
-                  </p>
                 </div>
               </div>
             </Reveal>
+
+            {/* Education card — shown only when data is provided */}
+            {education.hasData && (
+              <Reveal delay={0.08}>
+                <div className="relative overflow-hidden rounded-2xl border border-white/[0.07] bg-panel/50 p-6">
+                  <div className="relative">
+                    <span className="grid size-10 place-items-center rounded-lg border border-white/10 bg-white/[0.03]">
+                      <GraduationCap className="size-4 text-blue" aria-hidden="true" />
+                    </span>
+                    <p className="mt-5 font-mono text-[0.625rem] uppercase tracking-[0.16em] text-faint">
+                      Education
+                    </p>
+                    <h3 className="mt-2 text-base font-medium tracking-[-0.02em] text-mist">
+                      {education.degree}
+                    </h3>
+                    {"field" in education && education.field && (
+                      <p className="mt-1 text-sm text-violet/90">{education.field}</p>
+                    )}
+                    <p className="mt-1.5 text-xs text-muted leading-relaxed">{education.institution}</p>
+                    {"location" in education && education.location && (
+                      <div className="mt-4 flex flex-wrap gap-1.5">
+                        <span className="rounded-full border border-white/[0.08] bg-white/[0.03] px-2.5 py-1 font-mono text-[0.5625rem] uppercase tracking-[0.12em] text-muted">
+                          {education.location}
+                        </span>
+                      </div>
+                    )}
+                    {education.year && (
+                      <div className="mt-5 flex items-center justify-between border-t border-white/[0.06] pt-4">
+                        <span className="text-[0.75rem] text-faint">Graduated</span>
+                        <span className="font-mono text-[0.6875rem] tracking-[0.06em] text-muted">
+                          {education.year}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </Reveal>
+            )}
           </div>
 
           <div>

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://dhruvparasher.vercel.app/sitemap.xml
+Sitemap: https://portfoliodhr.netlify.app/sitemap.xml

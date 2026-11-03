@@ -3,17 +3,17 @@ export const siteConfig = {
   firstName: "Dhruv",
   lastName: "Parasher",
   initials: "DP",
-  role: "Full-Stack Developer",
+  role: "Full-Stack Engineer",
   speciality: "MERN Stack Engineer",
   experience: "4+ Years",
   location: "Delhi NCR, India",
   timezone: "IST",
   email: "dhpar22@gmail.com",
-  phone: "+91 00000 00000",
-  url: "https://dhruvparasher.vercel.app",
+  // phone intentionally omitted — not displayed on public portfolio
+  url: "https://portfoliodhr.netlify.app",
   resumePath: "/resume/dhruv-parasher-resume.pdf",
   description:
-    "Full-Stack Developer with 4 years of experience building scalable web applications, modern user interfaces, and robust backend systems with React, Next.js, Node.js, NestJS, MongoDB, and TypeScript.",
+    "Full-Stack Engineer with 4 years of experience building scalable web applications, modern user interfaces, and robust backend systems with React, Next.js, Node.js, NestJS, MongoDB, and TypeScript.",
   socials: {
     github: "https://github.com/parasherdhruv",
     linkedin: "https://www.linkedin.com/in/dhruvparasher",

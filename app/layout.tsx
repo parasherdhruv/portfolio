@@ -28,7 +28,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteConfig.url),
+  metadataBase: new URL("https://portfoliodhr.netlify.app"),
   title: {
     default: `${siteConfig.name} — ${siteConfig.role}`,
     template: `%s — ${siteConfig.name}`,
