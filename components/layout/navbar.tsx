@@ -124,15 +124,17 @@ export function Navbar() {
               >
                 <GitHubIcon className="size-[15px]" />
               </a>
-              <Magnetic strength={0.16} className="hidden md:inline-flex">
-                <a
-                  href="#contact"
-                  className="group inline-flex h-9 items-center gap-1.5 rounded-full bg-foreground px-4 text-[0.8125rem] font-medium text-background transition-all duration-300 hover:shadow-[0_10px_34px_-14px_var(--accent)]"
-                >
-                  Let&apos;s talk
-                  <ArrowUpRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-                </a>
-              </Magnetic>
+              <div className="hidden md:block">
+                <Magnetic strength={0.16}>
+                  <a
+                    href="#contact"
+                    className="group inline-flex h-9 items-center gap-1.5 rounded-full bg-foreground px-4 text-[0.8125rem] font-medium text-background transition-all duration-300 hover:shadow-[0_10px_34px_-14px_var(--accent)]"
+                  >
+                    Let&apos;s talk
+                    <ArrowUpRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                  </a>
+                </Magnetic>
+              </div>
 
               <button
                 ref={toggleRef}

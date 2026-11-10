@@ -88,7 +88,7 @@ export function ThemeSwitcher() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={reduce ? { opacity: 0 } : { opacity: 0, y: -6, scale: 0.985 }}
             transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute right-0 top-[calc(100%+0.75rem)] z-[80] w-[19.5rem] origin-top-right overflow-hidden rounded-2xl border border-border bg-surface/95 shadow-card backdrop-blur-2xl"
+            className="fixed right-4 top-20 z-[80] w-[min(19.5rem,calc(100vw-2rem))] max-h-[calc(100svh-6rem)] origin-top-right overflow-y-auto overscroll-contain rounded-2xl border border-border bg-surface/95 shadow-card backdrop-blur-2xl"
           >
             <div className="border-b border-border/80 px-4 py-3.5">
               <div className="flex items-center justify-between">

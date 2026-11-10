@@ -7,6 +7,10 @@
 /.next/
 /out/
 
+# Playwright artifacts
+/test-results/
+/playwright-report/
+
 # production
 /build
 

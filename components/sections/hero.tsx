@@ -59,7 +59,7 @@ export function Hero() {
               initial={reduce ? false : { opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.36, ease: EASE }}
-              className="mb-4 font-mono text-[0.6875rem] uppercase tracking-[0.24em] text-accent"
+              className="mb-4 font-mono text-lg font-semibold uppercase tracking-[0.12em] text-accent sm:text-xl sm:tracking-[0.16em]"
             >
               Hi, I&apos;m Dhruv Parasher
             </motion.p>
@@ -151,14 +151,18 @@ export function Hero() {
               ].map((stat) => (
                 <div
                   key={stat.label}
-                  className="flex flex-col gap-1 bg-surface/80 px-4 py-3.5 backdrop-blur-sm"
+                  className="flex min-w-0 flex-col gap-1 bg-surface/80 px-2.5 py-3.5 backdrop-blur-sm sm:px-4"
                 >
                   <dt className="sr-only">{stat.label}</dt>
-                  <dd className="text-base font-medium tracking-[-0.02em] text-foreground sm:text-lg">
+                  <dd className="whitespace-nowrap text-sm font-medium tracking-[-0.03em] text-foreground sm:text-lg">
                     {stat.value}
                   </dd>
-                  <dd className="font-mono text-[0.5625rem] uppercase tracking-[0.13em] text-subtle">
-                    {stat.label}
+                  <dd className="whitespace-nowrap font-mono text-[0.5rem] uppercase tracking-[0.06em] text-subtle sm:text-[0.5625rem] sm:tracking-[0.13em]">
+                    {stat.label === "Years experience"
+                      ? "Years exp."
+                      : stat.label === "Projects shipped"
+                        ? "Projects"
+                        : "End-to-end"}
                   </dd>
                 </div>
               ))}
