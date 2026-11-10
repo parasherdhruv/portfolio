@@ -7,6 +7,8 @@ import { navItems, siteConfig } from "@/lib/site";
 import { cn } from "@/lib/utils";
 import { useActiveSection } from "@/components/ui/scroll";
 import { Magnetic } from "@/components/motion/magnetic";
+import { Monogram } from "@/components/brand/monogram";
+import { ThemeSwitcher } from "@/components/theme/theme-switcher";
 
 const sectionIds = navItems.map((item) => item.href);
 
@@ -54,34 +56,33 @@ export function Navbar() {
           className={cn(
             "transition-all duration-500",
             scrolled
-              ? "border-b border-white/[0.06] bg-ink/70 backdrop-blur-xl"
+              ? "border-b border-border/80 bg-background/75 backdrop-blur-xl"
               : "border-b border-transparent bg-transparent",
           )}
         >
           <nav
             aria-label="Primary"
-            className="container-x flex h-16 items-center justify-between gap-6 sm:h-[4.5rem]"
+            className="container-x flex h-16 items-center justify-between gap-4 sm:h-[4.5rem]"
           >
             <a
               href="#top"
               className="group flex items-center gap-2.5"
               aria-label={`${siteConfig.name} — home`}
             >
-              <span className="relative grid size-8 place-items-center overflow-hidden rounded-lg border border-white/10 bg-white/[0.03] font-mono text-[0.6875rem] font-medium tracking-tight text-mist transition-colors duration-300 group-hover:border-violet/40">
-                <span className="absolute inset-0 bg-gradient-to-br from-violet/25 to-blue/10 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
-                <span className="relative">DP</span>
+              <span className="relative transition-transform duration-300 group-hover:-translate-y-0.5">
+                <Monogram size={34} />
               </span>
-              <span className="hidden flex-col leading-none sm:flex">
-                <span className="text-[0.8125rem] font-medium tracking-[-0.01em] text-mist">
+              <span className="flex flex-col leading-none">
+                <span className="text-[0.8125rem] font-medium tracking-[-0.02em] text-foreground sm:text-[0.875rem]">
                   Dhruv Parasher
                 </span>
-                <span className="mt-1 font-mono text-[0.5625rem] uppercase tracking-[0.16em] text-faint">
+                <span className="mt-1 hidden font-mono text-[0.5rem] uppercase tracking-[0.18em] text-subtle sm:block">
                   Full-Stack Developer
                 </span>
               </span>
             </a>
 
-            <div className="hidden items-center gap-1 lg:flex">
+            <div className="hidden items-center gap-0.5 lg:flex">
               {navItems.map((item) => {
                 const isActive = active === item.href;
                 return (
@@ -89,14 +90,16 @@ export function Navbar() {
                     key={item.href}
                     href={item.href}
                     className={cn(
-                      "relative rounded-full px-3.5 py-2 text-[0.8125rem] transition-colors duration-300",
-                      isActive ? "text-mist" : "text-muted hover:text-mist",
+                      "relative rounded-full px-3 py-2 text-[0.8125rem] transition-colors duration-300",
+                      isActive
+                        ? "text-foreground"
+                        : "text-muted hover:text-foreground",
                     )}
                   >
                     {isActive ? (
                       <motion.span
                         layoutId="nav-pill"
-                        className="absolute inset-0 rounded-full border border-white/10 bg-white/[0.055]"
+                        className="absolute inset-0 rounded-full border border-border bg-surface-2/70"
                         transition={{
                           type: "spring",
                           stiffness: 380,
@@ -110,20 +113,21 @@ export function Navbar() {
               })}
             </div>
 
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2">
+              <ThemeSwitcher />
               <a
                 href={siteConfig.socials.github}
                 target="_blank"
                 rel="noreferrer noopener"
                 aria-label="GitHub profile"
-                className="hidden size-9 place-items-center rounded-full border border-white/[0.07] text-muted transition-colors duration-300 hover:border-white/20 hover:text-mist sm:grid"
+                className="hidden size-9 place-items-center rounded-full border border-border text-muted transition-colors duration-300 hover:border-border-strong hover:text-foreground sm:grid"
               >
                 <GitHubIcon className="size-[15px]" />
               </a>
-              <Magnetic strength={0.16} className="hidden sm:inline-flex">
+              <Magnetic strength={0.16} className="hidden md:inline-flex">
                 <a
                   href="#contact"
-                  className="group inline-flex h-9 items-center gap-1.5 rounded-full bg-mist px-4 text-[0.8125rem] font-medium text-ink transition-all duration-300 hover:shadow-[0_10px_34px_-14px_rgba(143,124,255,0.8)]"
+                  className="group inline-flex h-9 items-center gap-1.5 rounded-full bg-foreground px-4 text-[0.8125rem] font-medium text-background transition-all duration-300 hover:shadow-[0_10px_34px_-14px_var(--accent)]"
                 >
                   Let&apos;s talk
                   <ArrowUpRight className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -137,7 +141,7 @@ export function Navbar() {
                 aria-expanded={open}
                 aria-controls="mobile-menu"
                 aria-label={open ? "Close menu" : "Open menu"}
-                className="grid size-9 place-items-center rounded-full border border-white/[0.09] text-mist lg:hidden"
+                className="grid size-9 place-items-center rounded-full border border-border text-foreground lg:hidden"
               >
                 {open ? <X className="size-4" /> : <Menu className="size-4" />}
               </button>
@@ -150,7 +154,7 @@ export function Navbar() {
         {open ? (
           <motion.div
             id="mobile-menu"
-            className="fixed inset-0 z-[64] flex flex-col bg-ink/96 backdrop-blur-2xl lg:hidden"
+            className="fixed inset-0 z-[64] flex flex-col bg-background/96 backdrop-blur-2xl lg:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -165,17 +169,17 @@ export function Navbar() {
                   initial={{ opacity: 0, y: 18 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{
-                    delay: 0.06 + index * 0.05,
+                    delay: 0.06 + index * 0.045,
                     duration: 0.5,
                     ease: [0.22, 1, 0.36, 1],
                   }}
-                  className="group flex items-baseline justify-between border-b border-white/[0.06] py-5"
+                  className="group flex items-baseline justify-between border-b border-border/70 py-4"
                 >
-                  <span className="text-3xl font-medium tracking-[-0.03em] text-mist">
+                  <span className="text-[1.75rem] font-medium tracking-[-0.03em] text-foreground">
                     {item.label}
                   </span>
-                  <span className="font-mono text-[0.625rem] text-faint">
-                    0{index + 1}
+                  <span className="font-mono text-[0.625rem] text-subtle">
+                    {String(index + 1).padStart(2, "0")}
                   </span>
                 </motion.a>
               ))}
@@ -183,14 +187,14 @@ export function Navbar() {
               <motion.div
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.34, duration: 0.5 }}
-                className="mt-10 flex items-center gap-3"
+                transition={{ delay: 0.32, duration: 0.5 }}
+                className="mt-8 flex items-center gap-3"
               >
                 <a
                   href={siteConfig.socials.github}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="flex h-11 flex-1 items-center justify-center gap-2 rounded-full border border-white/10 text-sm text-mist"
+                  className="flex h-11 flex-1 items-center justify-center gap-2 rounded-full border border-border text-sm text-foreground"
                 >
                   <GitHubIcon className="size-4" /> GitHub
                 </a>
@@ -198,11 +202,20 @@ export function Navbar() {
                   href={siteConfig.socials.linkedin}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="flex h-11 flex-1 items-center justify-center gap-2 rounded-full border border-white/10 text-sm text-mist"
+                  className="flex h-11 flex-1 items-center justify-center gap-2 rounded-full border border-border text-sm text-foreground"
                 >
                   <LinkedInIcon className="size-4" /> LinkedIn
                 </a>
               </motion.div>
+
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.42 }}
+                className="mt-6 text-center font-mono text-[0.5625rem] uppercase tracking-[0.2em] text-subtle"
+              >
+                {siteConfig.title}
+              </motion.p>
             </div>
           </motion.div>
         ) : null}

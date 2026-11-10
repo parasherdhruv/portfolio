@@ -3,17 +3,18 @@ export const siteConfig = {
   firstName: "Dhruv",
   lastName: "Parasher",
   initials: "DP",
-  role: "Full-Stack Engineer",
+  role: "Full-Stack Developer",
   speciality: "MERN Stack Engineer",
-  experience: "4+ Years",
+  title: "Full-Stack Developer | MERN Stack Engineer",
+  experience: "4 Years",
   location: "Delhi NCR, India",
   timezone: "IST",
   email: "dhpar22@gmail.com",
-  // phone intentionally omitted — not displayed on public portfolio
-  url: "https://portfoliodhr.netlify.app",
+  url: "https://dhruvparasher.vercel.app",
   resumePath: "/resume/dhruv-parasher-resume.pdf",
+  headline: "Building Digital Experiences That Make an Impact.",
   description:
-    "Full-Stack Engineer with 4 years of experience building scalable web applications, modern user interfaces, and robust backend systems with React, Next.js, Node.js, NestJS, MongoDB, and TypeScript.",
+    "Dhruv Parasher is a Full-Stack Developer and MERN Stack Engineer with 4 years of experience building scalable web applications, modern interfaces, and reliable backend systems with React, Next.js, Node.js, NestJS, MongoDB, and TypeScript.",
   socials: {
     github: "https://github.com/parasherdhruv",
     linkedin: "https://www.linkedin.com/in/dhruvparasher",
@@ -25,5 +26,6 @@ export const navItems = [
   { label: "Experience", href: "#experience" },
   { label: "Work", href: "#work" },
   { label: "Skills", href: "#skills" },
+  { label: "Philosophy", href: "#philosophy" },
   { label: "Contact", href: "#contact" },
 ] as const;

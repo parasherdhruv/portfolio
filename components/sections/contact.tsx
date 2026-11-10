@@ -5,6 +5,7 @@ import { motion, useReducedMotion } from "motion/react";
 import {
   ArrowUpRight,
   Check,
+  Copy,
   Download,
   Mail,
   MapPin,
@@ -25,6 +26,7 @@ type FormState = {
 };
 
 type Errors = Partial<Record<keyof FormState, string>>;
+type Status = "idle" | "ready" | "error";
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
@@ -52,14 +54,15 @@ export function Contact() {
   });
   const [errors, setErrors] = useState<Errors>({});
   const [touched, setTouched] = useState<Record<string, boolean>>({});
-  const [status, setStatus] = useState<"idle" | "ready">("idle");
+  const [status, setStatus] = useState<Status>("idle");
+  const [copied, setCopied] = useState(false);
 
-  const isValid =
-    Object.keys(validate(values)).length === 0 && values.message.length >= 20;
+  const isValid = Object.keys(validate(values)).length === 0;
 
   function update<K extends keyof FormState>(key: K, value: string) {
     const next = { ...values, [key]: value };
     setValues(next);
+    if (status === "error") setStatus("idle");
     if (touched[key]) {
       setErrors(validate(next));
     }
@@ -76,6 +79,7 @@ export function Contact() {
     setErrors(nextErrors);
     setTouched({ name: true, email: true, message: true });
     if (Object.keys(nextErrors).length > 0) {
+      setStatus("error");
       const firstKey = Object.keys(nextErrors)[0];
       document.getElementById(`field-${firstKey}`)?.focus();
       return;
@@ -89,6 +93,16 @@ export function Contact() {
     );
     window.location.href = `mailto:${siteConfig.email}?subject=${subject}&body=${body}`;
     setStatus("ready");
+  }
+
+  async function copyEmail() {
+    try {
+      await navigator.clipboard.writeText(siteConfig.email);
+      setCopied(true);
+      window.setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopied(false);
+    }
   }
 
   const fields = [
@@ -128,13 +142,13 @@ export function Contact() {
               <Reveal>
                 <span className="section-label">06</span>
               </Reveal>
-              <span className="h-px w-8 bg-line" aria-hidden="true" />
+              <span className="h-px w-8 bg-border" aria-hidden="true" />
               <Reveal delay={0.05}>
                 <span className="section-label text-muted">Contact</span>
               </Reveal>
             </div>
 
-            <h2 className="mt-8 text-[clamp(2.2rem,5vw,4rem)] font-medium leading-[1.0] tracking-[-0.05em] text-mist">
+            <h2 className="mt-8 text-[clamp(2.2rem,5vw,4rem)] font-medium leading-[1.0] tracking-[-0.05em] text-foreground">
               <SplitWords inView text="Have an interesting" />
               <br />
               <span className="serif-accent text-gradient">
@@ -151,34 +165,51 @@ export function Contact() {
             </Reveal>
 
             <Reveal delay={0.18} className="mt-9">
-              <a
-                href={`mailto:${siteConfig.email}`}
-                className="group inline-flex items-center gap-3"
-              >
-                <span className="grid size-11 place-items-center rounded-full border border-white/[0.09] bg-white/[0.03] transition-colors duration-300 group-hover:border-violet/40">
-                  <Mail className="size-4 text-violet" aria-hidden="true" />
-                </span>
-                <span>
-                  <span className="block font-mono text-[0.5625rem] uppercase tracking-[0.16em] text-faint">
-                    Email
+              <div className="flex items-center gap-3">
+                <a
+                  href={`mailto:${siteConfig.email}`}
+                  className="group inline-flex items-center gap-3"
+                >
+                  <span className="grid size-11 place-items-center rounded-full border border-border bg-surface-2/60 transition-colors duration-300 group-hover:border-accent/40">
+                    <Mail className="size-4 text-accent" aria-hidden="true" />
                   </span>
-                  <span className="mt-1 block text-[0.9375rem] text-mist transition-colors group-hover:text-violet">
-                    {siteConfig.email}
+                  <span>
+                    <span className="block font-mono text-[0.5625rem] uppercase tracking-[0.16em] text-subtle">
+                      Email
+                    </span>
+                    <span className="mt-1 block text-[0.9375rem] text-foreground transition-colors group-hover:text-accent">
+                      {siteConfig.email}
+                    </span>
                   </span>
+                </a>
+                <button
+                  type="button"
+                  onClick={copyEmail}
+                  aria-label={copied ? "Email copied" : "Copy email address"}
+                  className="grid size-8 place-items-center rounded-full border border-border text-muted transition-colors hover:border-accent/40 hover:text-foreground"
+                >
+                  {copied ? (
+                    <Check className="size-3.5 text-success" aria-hidden="true" />
+                  ) : (
+                    <Copy className="size-3.5" aria-hidden="true" />
+                  )}
+                </button>
+                <span aria-live="polite" className="sr-only">
+                  {copied ? "Email address copied to clipboard" : ""}
                 </span>
-              </a>
+              </div>
             </Reveal>
 
             <Reveal delay={0.22}>
               <div className="mt-6 flex items-center gap-3">
-                <span className="grid size-11 place-items-center rounded-full border border-white/[0.09] bg-white/[0.03]">
+                <span className="grid size-11 place-items-center rounded-full border border-border bg-surface-2/60">
                   <MapPin className="size-4 text-muted" aria-hidden="true" />
                 </span>
                 <span>
-                  <span className="block font-mono text-[0.5625rem] uppercase tracking-[0.16em] text-faint">
+                  <span className="block font-mono text-[0.5625rem] uppercase tracking-[0.16em] text-subtle">
                     Location
                   </span>
-                  <span className="mt-1 block text-[0.9375rem] text-mist">
+                  <span className="mt-1 block text-[0.9375rem] text-foreground">
                     {siteConfig.location}
                   </span>
                 </span>
@@ -191,7 +222,7 @@ export function Contact() {
                   href={siteConfig.socials.linkedin}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="group inline-flex h-10 items-center gap-2 rounded-full border border-white/[0.09] px-4 text-[0.8125rem] text-muted transition-all duration-300 hover:border-white/20 hover:text-mist"
+                  className="group inline-flex h-10 items-center gap-2 rounded-full border border-border px-4 text-[0.8125rem] text-muted transition-all duration-300 hover:border-border-strong hover:text-foreground"
                 >
                   <LinkedInIcon className="size-3.5" />
                   LinkedIn
@@ -201,7 +232,7 @@ export function Contact() {
                   href={siteConfig.socials.github}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="group inline-flex h-10 items-center gap-2 rounded-full border border-white/[0.09] px-4 text-[0.8125rem] text-muted transition-all duration-300 hover:border-white/20 hover:text-mist"
+                  className="group inline-flex h-10 items-center gap-2 rounded-full border border-border px-4 text-[0.813rem] text-muted transition-all duration-300 hover:border-border-strong hover:text-foreground"
                 >
                   <GitHubIcon className="size-3.5" />
                   GitHub
@@ -210,7 +241,7 @@ export function Contact() {
                 <a
                   href={siteConfig.resumePath}
                   download
-                  className="group inline-flex h-10 items-center gap-2 rounded-full border border-white/[0.09] px-4 text-[0.8125rem] text-muted transition-all duration-300 hover:border-white/20 hover:text-mist"
+                  className="group inline-flex h-10 items-center gap-2 rounded-full border border-border px-4 text-[0.8125rem] text-muted transition-all duration-300 hover:border-border-strong hover:text-foreground"
                 >
                   <Download className="size-3.5" />
                   Resume
@@ -220,17 +251,17 @@ export function Contact() {
           </div>
 
           <Reveal delay={0.1}>
-            <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-panel/50 p-6 sm:p-8">
+            <div className="relative overflow-hidden rounded-2xl border border-border bg-surface/60 p-6 sm:p-8">
               <div
                 aria-hidden="true"
-                className="absolute -right-24 -top-24 size-60 rounded-full bg-[radial-gradient(circle,rgba(143,124,255,0.12),transparent_70%)] blur-2xl"
+                className="ambient-glow-a absolute -right-24 -top-24 size-60 rounded-full blur-2xl"
               />
               <form onSubmit={handleSubmit} noValidate className="relative">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-[1.0625rem] font-medium tracking-[-0.02em] text-mist">
+                  <h3 className="text-[1.0625rem] font-medium tracking-[-0.02em] text-foreground">
                     Start a conversation
                   </h3>
-                  <span className="font-mono text-[0.5rem] uppercase tracking-[0.14em] text-faint">
+                  <span className="font-mono text-[0.5rem] uppercase tracking-[0.14em] text-subtle">
                     Validated form
                   </span>
                 </div>
@@ -248,13 +279,13 @@ export function Contact() {
                           <span>
                             {field.label}
                             {field.optional ? (
-                              <span className="ml-1.5 text-faint">(optional)</span>
+                              <span className="ml-1.5 text-subtle">(optional)</span>
                             ) : (
-                              <span className="ml-1 text-violet/70">*</span>
+                              <span className="ml-1 text-accent/80">*</span>
                             )}
                           </span>
                           {error ? (
-                            <span className="text-[0.5625rem] font-normal text-red-400/90">
+                            <span className="text-[0.5625rem] font-normal text-danger">
                               {error}
                             </span>
                           ) : null}
@@ -271,9 +302,9 @@ export function Contact() {
                           aria-invalid={Boolean(error)}
                           aria-describedby={error ? `${id}-error` : undefined}
                           className={cn(
-                            "h-11 w-full rounded-lg border bg-white/[0.02] px-3.5 text-[0.875rem] text-mist placeholder:text-faint/70 transition-all duration-300",
-                            "focus:border-violet/50 focus:bg-white/[0.04] focus:outline-none focus:ring-2 focus:ring-violet/15",
-                            error ? "border-red-400/40" : "border-white/[0.08]",
+                            "h-11 w-full rounded-lg border bg-surface-2/40 px-3.5 text-[0.875rem] text-foreground placeholder:text-subtle/80 transition-all duration-300",
+                            "focus:border-accent/60 focus:bg-surface-2/70 focus:outline-none focus:ring-2 focus:ring-accent/20",
+                            error ? "border-danger/50" : "border-border",
                           )}
                         />
                         {error ? (
@@ -291,12 +322,12 @@ export function Contact() {
                       className="mb-2 flex items-center justify-between text-[0.6875rem] font-medium tracking-[0.02em] text-muted"
                     >
                       <span>
-                        Message<span className="ml-1 text-violet/70">*</span>
+                        Message<span className="ml-1 text-accent/80">*</span>
                       </span>
                       <span
                         className={cn(
                           "text-[0.5625rem] font-normal",
-                          errors.message ? "text-red-400/90" : "text-faint",
+                          errors.message ? "text-danger" : "text-subtle",
                         )}
                       >
                         {errors.message ?? `${values.message.length} chars`}
@@ -315,9 +346,9 @@ export function Contact() {
                         errors.message ? "field-message-error" : undefined
                       }
                       className={cn(
-                        "w-full resize-none rounded-lg border bg-white/[0.02] px-3.5 py-3 text-[0.875rem] leading-relaxed text-mist placeholder:text-faint/70 transition-all duration-300",
-                        "focus:border-violet/50 focus:bg-white/[0.04] focus:outline-none focus:ring-2 focus:ring-violet/15",
-                        errors.message ? "border-red-400/40" : "border-white/[0.08]",
+                        "w-full resize-none rounded-lg border bg-surface-2/40 px-3.5 py-3 text-[0.875rem] leading-relaxed text-foreground placeholder:text-subtle/80 transition-all duration-300",
+                        "focus:border-accent/60 focus:bg-surface-2/70 focus:outline-none focus:ring-2 focus:ring-accent/20",
+                        errors.message ? "border-danger/50" : "border-border",
                       )}
                     />
                     {errors.message ? (
@@ -329,14 +360,14 @@ export function Contact() {
                 </div>
 
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  <p className="text-[0.625rem] leading-relaxed text-faint">
+                  <p className="text-[0.625rem] leading-relaxed text-subtle">
                     Opens your email client with the message pre-filled. No data
                     is stored on this site.
                   </p>
                   <Magnetic strength={0.14}>
                     <button
                       type="submit"
-                      className="group inline-flex h-11 items-center gap-2 rounded-full bg-mist px-5 text-[0.8125rem] font-medium text-ink transition-all duration-300 hover:bg-white hover:shadow-[0_14px_44px_-18px_rgba(143,124,255,0.8)]"
+                      className="group inline-flex h-11 items-center gap-2 rounded-full bg-foreground px-5 text-[0.8125rem] font-medium text-background transition-all duration-300 hover:shadow-[0_14px_44px_-18px_var(--accent)]"
                     >
                       {status === "ready" ? (
                         <>
@@ -346,7 +377,10 @@ export function Contact() {
                       ) : (
                         <>
                           Send message
-                          <Send className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5" aria-hidden="true" />
+                          <Send
+                            className="size-3.5 transition-transform duration-300 group-hover:translate-x-0.5"
+                            aria-hidden="true"
+                          />
                         </>
                       )}
                     </button>
@@ -355,13 +389,18 @@ export function Contact() {
 
                 <div
                   aria-live="polite"
-                  className="mt-3 min-h-[1rem] text-[0.625rem] text-faint"
+                  className={cn(
+                    "mt-3 min-h-[1rem] text-[0.625rem]",
+                    status === "error" ? "text-danger" : "text-subtle",
+                  )}
                 >
                   {status === "ready"
-                    ? "If your mail client didn't open, email me directly at the address on the left."
-                    : !isValid && Object.keys(touched).length > 0
-                      ? "Complete the required fields to enable sending."
-                      : ""}
+                    ? "If your mail client didn't open, use the copy-email button or write to me directly."
+                    : status === "error"
+                      ? "Please fix the highlighted fields before sending."
+                      : !isValid && Object.keys(touched).length > 0
+                        ? "Complete the required fields to enable sending."
+                        : ""}
                 </div>
               </form>
 
@@ -370,7 +409,7 @@ export function Contact() {
                 initial={false}
                 animate={reduce ? undefined : { opacity: [0.3, 0.5, 0.3] }}
                 transition={{ duration: 5, repeat: Infinity }}
-                className="pointer-events-none absolute inset-x-8 bottom-0 h-px bg-gradient-to-r from-transparent via-violet/40 to-transparent"
+                className="pointer-events-none absolute inset-x-8 bottom-0 h-px bg-gradient-to-r from-transparent via-accent/50 to-transparent"
               />
             </div>
           </Reveal>

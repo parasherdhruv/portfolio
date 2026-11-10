@@ -22,14 +22,14 @@ const codeLines = [
   { indent: 0, tokens: [["punc", "}"], ["punc", ";"], ["sp", " "], ["cmt", "// always"]] },
 ];
 
-const tokenColor: Record<string, string> = {
-  kw: "text-[#c4a5ff]",
-  fn: "text-[#7fd1ff]",
-  str: "text-[#a8e6b8]",
-  prop: "text-[#e6e6f0]",
-  punc: "text-[#7c7c8c]",
-  op: "text-[#9d8fff]",
-  cmt: "text-[#4c4c58]",
+const tokenClass: Record<string, string> = {
+  kw: "text-accent",
+  fn: "text-accent-2",
+  str: "text-foreground/80",
+  prop: "text-foreground/90",
+  punc: "text-subtle",
+  op: "text-accent/80",
+  cmt: "text-subtle/70",
   sp: "text-transparent",
 };
 
@@ -69,30 +69,30 @@ export function HeroVisual() {
     >
       <div
         aria-hidden="true"
-        className="absolute -inset-14 -z-10 rounded-full bg-[radial-gradient(circle,rgba(143,124,255,0.18),transparent_66%)] blur-2xl"
+        className="ambient-glow-a absolute -inset-14 -z-10 rounded-full blur-2xl"
       />
 
       <div className="pointer-events-none absolute -inset-8 -z-10 hidden xl:block">
-        <div className="absolute inset-0 animate-spin-slower rounded-full border border-dashed border-white/[0.055]" />
-        <div className="absolute inset-8 animate-spin-slow rounded-full border border-white/[0.04]" />
+        <div className="absolute inset-0 animate-spin-slower rounded-full border border-dashed border-border/60" />
+        <div className="absolute inset-8 animate-spin-slow rounded-full border border-border/40" />
       </div>
 
       <motion.div
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
         className="relative"
       >
-        <div className="glow-border overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0b0b10]/90 shadow-[0_40px_120px_-50px_rgba(0,0,0,0.9)] backdrop-blur-xl">
-          <div className="flex items-center justify-between border-b border-white/[0.06] px-4 py-3">
+        <div className="glow-border overflow-hidden rounded-2xl border border-border bg-surface/90 shadow-card backdrop-blur-xl">
+          <div className="flex items-center justify-between border-b border-border/80 px-4 py-3">
             <div className="flex items-center gap-1.5">
-              <span className="size-2.5 rounded-full bg-[#3a3a44]" />
-              <span className="size-2.5 rounded-full bg-[#3a3a44]" />
-              <span className="size-2.5 rounded-full bg-[#3a3a44]" />
+              <span className="size-2.5 rounded-full bg-border-strong" />
+              <span className="size-2.5 rounded-full bg-border-strong" />
+              <span className="size-2.5 rounded-full bg-border-strong" />
             </div>
-            <span className="font-mono text-[0.5625rem] tracking-[0.14em] text-faint">
+            <span className="font-mono text-[0.5625rem] tracking-[0.14em] text-subtle">
               engineer.ts
             </span>
-            <span className="flex items-center gap-1 font-mono text-[0.5rem] uppercase tracking-[0.14em] text-emerald-400/70">
-              <span className="size-1 rounded-full bg-emerald-400/80" />
+            <span className="flex items-center gap-1 font-mono text-[0.5rem] uppercase tracking-[0.14em] text-success/80">
+              <span className="size-1 rounded-full bg-success" />
               live
             </span>
           </div>
@@ -100,7 +100,7 @@ export function HeroVisual() {
           <div className="relative px-4 py-5 font-mono text-[0.6875rem] leading-[1.75] sm:text-xs">
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,rgba(143,124,255,0.035)_50%,transparent_100%)]"
+              className="pointer-events-none absolute inset-0 bg-[linear-gradient(180deg,transparent_0%,color-mix(in_oklab,var(--accent)_5%,transparent)_50%,transparent_100%)]"
             />
             {codeLines.map((line, lineIndex) => (
               <motion.div
@@ -114,12 +114,12 @@ export function HeroVisual() {
                 }}
                 className="flex gap-3 whitespace-pre"
               >
-                <span className="w-3 select-none text-right text-[#2e2e38]">
+                <span className="w-3 select-none text-right text-subtle/50">
                   {lineIndex + 1}
                 </span>
                 <span style={{ paddingLeft: `${line.indent * 14}px` }}>
                   {line.tokens.map(([type, text], tokenIndex) => (
-                    <span key={tokenIndex} className={tokenColor[type]}>
+                    <span key={tokenIndex} className={tokenClass[type]}>
                       {text}
                     </span>
                   ))}
@@ -130,11 +130,11 @@ export function HeroVisual() {
               aria-hidden="true"
               animate={reduce ? undefined : { opacity: [1, 0, 1] }}
               transition={{ duration: 1.2, repeat: Infinity, ease: "linear" }}
-              className="ml-[1.9rem] inline-block h-[1.05em] w-[5px] translate-y-[3px] bg-violet/80"
+              className="ml-[1.9rem] inline-block h-[1.05em] w-[5px] translate-y-[3px] bg-accent/80"
             />
           </div>
 
-          <div className="grid grid-cols-3 gap-px border-t border-white/[0.06] bg-white/[0.04]">
+          <div className="grid grid-cols-3 gap-px border-t border-border/80 bg-border/60">
             {[
               { icon: Layers3, label: "Architecture" },
               { icon: Zap, label: "Performance" },
@@ -142,10 +142,10 @@ export function HeroVisual() {
             ].map(({ icon: Icon, label }) => (
               <div
                 key={label}
-                className="flex flex-col items-center gap-1.5 bg-[#0a0a0f]/90 py-3"
+                className="flex flex-col items-center gap-1.5 bg-surface/90 py-3"
               >
-                <Icon className="size-3.5 text-violet/70" aria-hidden="true" />
-                <span className="font-mono text-[0.5rem] uppercase tracking-[0.1em] text-faint">
+                <Icon className="size-3.5 text-accent/80" aria-hidden="true" />
+                <span className="font-mono text-[0.5rem] uppercase tracking-[0.1em] text-subtle">
                   {label}
                 </span>
               </div>
@@ -157,15 +157,15 @@ export function HeroVisual() {
           animate={reduce ? undefined : { y: [0, -9, 0] }}
           transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }}
           style={{ transform: "translateZ(45px)" }}
-          className="glass absolute -left-7 top-[22%] hidden rounded-xl px-3 py-2.5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.9)] xl:block"
+          className="glass absolute -left-7 top-[22%] hidden rounded-xl px-3 py-2.5 shadow-soft xl:block"
         >
           <div className="flex items-center gap-2">
-            <span className="grid size-6 place-items-center rounded-md bg-violet/15">
-              <Zap className="size-3 text-violet" aria-hidden="true" />
+            <span className="grid size-6 place-items-center rounded-md bg-accent/15">
+              <Zap className="size-3 text-accent" aria-hidden="true" />
             </span>
             <div className="leading-none">
-              <p className="text-[0.6875rem] font-medium text-mist">4+ years</p>
-              <p className="mt-1 font-mono text-[0.5rem] uppercase tracking-[0.12em] text-faint">
+              <p className="text-[0.6875rem] font-medium text-foreground">4 years</p>
+              <p className="mt-1 font-mono text-[0.5rem] uppercase tracking-[0.12em] text-subtle">
                 engineering
               </p>
             </div>
@@ -181,16 +181,16 @@ export function HeroVisual() {
             delay: 0.6,
           }}
           style={{ transform: "translateZ(60px)" }}
-          className="glass absolute -right-6 bottom-[16%] hidden rounded-xl px-3.5 py-2.5 shadow-[0_20px_60px_-30px_rgba(0,0,0,0.9)] xl:block"
+          className="glass absolute -right-6 bottom-[16%] hidden rounded-xl px-3.5 py-2.5 shadow-soft xl:block"
         >
           <div className="flex items-center gap-2.5">
             <span className="relative flex size-2 items-center justify-center">
-              <span className="absolute size-2 animate-pulse-soft rounded-full bg-emerald-400/60" />
-              <span className="relative size-1.5 rounded-full bg-emerald-400" />
+              <span className="absolute size-2 animate-pulse-soft rounded-full bg-success/60" />
+              <span className="relative size-1.5 rounded-full bg-success" />
             </span>
             <div className="leading-none">
-              <p className="text-[0.6875rem] font-medium text-mist">MERN stack</p>
-              <p className="mt-1 font-mono text-[0.5rem] uppercase tracking-[0.12em] text-faint">
+              <p className="text-[0.6875rem] font-medium text-foreground">MERN stack</p>
+              <p className="mt-1 font-mono text-[0.5rem] uppercase tracking-[0.12em] text-subtle">
                 end-to-end
               </p>
             </div>
@@ -200,7 +200,7 @@ export function HeroVisual() {
 
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-1/2 top-full h-24 w-[80%] -translate-x-1/2 rounded-[50%] bg-[radial-gradient(ellipse,rgba(143,124,255,0.14),transparent_70%)] blur-xl"
+        className="ambient-glow-c pointer-events-none absolute left-1/2 top-full h-24 w-[80%] -translate-x-1/2 rounded-[50%] blur-xl"
       />
     </motion.div>
   );

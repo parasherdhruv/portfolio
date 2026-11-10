@@ -48,17 +48,17 @@ export function Skills() {
         </div>
 
         <Reveal className="mt-10">
-          <div className="relative overflow-hidden rounded-2xl border border-white/[0.07] bg-white/[0.015] px-5 py-6 sm:px-8">
+          <div className="relative overflow-hidden rounded-2xl border border-border bg-surface/30 px-5 py-6 sm:px-8">
             <div
               aria-hidden="true"
-              className="absolute inset-0 dot-grid opacity-[0.35] [mask-image:linear-gradient(to_right,#000,transparent_70%)]"
+              className="dot-grid absolute inset-0 opacity-40 [mask-image:linear-gradient(to_right,#000,transparent_70%)]"
             />
             <div className="relative flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
               <p className="max-w-lg text-[0.875rem] leading-relaxed text-muted">
                 Comfortable moving across the stack — from a single component
                 variant to API contracts, data models, and deployment pipelines.
               </p>
-              <div className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.5625rem] uppercase tracking-[0.14em] text-faint">
+              <div className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.5625rem] uppercase tracking-[0.14em] text-subtle">
                 <span>Frontend</span>
                 <span>Backend</span>
                 <span>Cloud</span>
@@ -97,26 +97,26 @@ function SkillCard({
       <motion.div
         ref={ref}
         style={reduce ? undefined : { rotate }}
-        className="group relative h-full overflow-hidden rounded-2xl border border-white/[0.07] bg-panel/40 p-6 transition-colors duration-500 hover:border-white/[0.14] sm:p-7"
+        className="group relative h-full overflow-hidden rounded-2xl border border-border bg-surface/50 p-6 transition-colors duration-500 hover:border-border-strong sm:p-7"
       >
         <div
           aria-hidden="true"
-          className="absolute -right-16 -top-16 size-44 rounded-full bg-[radial-gradient(circle,rgba(143,124,255,0.1),transparent_70%)] opacity-0 blur-2xl transition-opacity duration-700 group-hover:opacity-100"
+          className="ambient-glow-a absolute -right-16 -top-16 size-44 rounded-full opacity-0 blur-2xl transition-opacity duration-700 group-hover:opacity-100"
         />
 
         <div className="relative flex items-start justify-between">
           <div className="flex items-center gap-3">
-            <span className="grid size-10 place-items-center rounded-xl border border-white/[0.08] bg-white/[0.03] transition-colors duration-500 group-hover:border-violet/25">
-              <Icon className="size-4 text-violet/80" aria-hidden="true" />
+            <span className="grid size-10 place-items-center rounded-xl border border-border bg-surface-2/60 transition-colors duration-500 group-hover:border-accent/30">
+              <Icon className="size-4 text-accent/90" aria-hidden="true" />
             </span>
             <div>
-              <h3 className="text-[0.9375rem] font-medium tracking-[-0.01em] text-mist">
+              <h3 className="text-[0.9375rem] font-medium tracking-[-0.01em] text-foreground">
                 {group.title}
               </h3>
-              <p className="mt-0.5 text-[0.6875rem] text-faint">{group.description}</p>
+              <p className="mt-0.5 text-[0.6875rem] text-subtle">{group.description}</p>
             </div>
           </div>
-          <span className="font-mono text-[0.5625rem] tracking-[0.12em] text-faint">
+          <span className="font-mono text-[0.5625rem] tracking-[0.12em] text-subtle">
             0{index + 1}
           </span>
         </div>
@@ -124,7 +124,7 @@ function SkillCard({
         <StaggerGroup className="relative mt-6 flex flex-wrap gap-1.5" amount={0.1}>
           {group.items.map((item) => (
             <StaggerItem key={item}>
-              <span className="inline-flex cursor-default items-center rounded-full border border-white/[0.07] bg-white/[0.02] px-3 py-1.5 text-[0.75rem] text-muted transition-all duration-300 hover:-translate-y-0.5 hover:border-violet/30 hover:bg-violet/[0.07] hover:text-mist">
+              <span className="inline-flex cursor-default items-center rounded-full border border-border bg-surface-2/40 px-3 py-1.5 text-[0.75rem] text-muted transition-all duration-300 hover:-translate-y-0.5 hover:border-accent/35 hover:bg-accent/10 hover:text-foreground">
                 {item}
               </span>
             </StaggerItem>

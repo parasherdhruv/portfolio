@@ -20,7 +20,7 @@ export function ScrollProgress() {
   return (
     <motion.div
       aria-hidden="true"
-      className="fixed inset-x-0 top-0 z-[70] h-px origin-left bg-gradient-to-r from-blue via-violet to-cyan"
+      className="fixed inset-x-0 top-0 z-[70] h-[2px] origin-left bg-gradient-to-r from-accent-2 via-accent to-accent-2"
       style={{ scaleX }}
     />
   );
@@ -65,7 +65,7 @@ export function BackToTop() {
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       aria-label="Back to top"
       className={cn(
-        "fixed bottom-6 right-5 z-[60] grid size-11 place-items-center rounded-full border border-white/10 bg-panel/80 text-muted backdrop-blur-md transition-all duration-300 hover:border-white/25 hover:text-mist",
+        "fixed bottom-6 right-5 z-[60] grid size-11 place-items-center rounded-full border border-border bg-surface/85 text-muted shadow-soft backdrop-blur-md transition-all duration-300 hover:border-accent/40 hover:text-foreground",
         visible
           ? "translate-y-0 opacity-100"
           : "pointer-events-none translate-y-3 opacity-0",

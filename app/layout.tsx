@@ -6,6 +6,9 @@ import { AmbientCanvas, AmbientGlow } from "@/components/layout/ambient";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { BackToTop, ScrollProgress } from "@/components/ui/scroll";
+import { ThemeProvider } from "@/components/theme/theme-provider";
+import { ThemeScript } from "@/components/theme/theme-script";
+import { PageLoader } from "@/components/layout/page-loader";
 
 const interTight = Inter_Tight({
   subsets: ["latin"],
@@ -27,50 +30,65 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
 });
 
+const seoTitle = "Dhruv Parasher | Full-Stack Developer";
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://portfoliodhr.netlify.app"),
+  metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} — ${siteConfig.role}`,
-    template: `%s — ${siteConfig.name}`,
+    default: seoTitle,
+    template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
   applicationName: `${siteConfig.name} Portfolio`,
   authors: [{ name: siteConfig.name, url: siteConfig.url }],
   creator: siteConfig.name,
+  publisher: siteConfig.name,
   keywords: [
     "Dhruv Parasher",
+    "Dhruv Parasher portfolio",
     "Full-Stack Developer",
-    "MERN Stack Developer",
+    "MERN Stack Engineer",
     "React Developer",
     "Next.js Developer",
     "Node.js Developer",
     "NestJS",
     "TypeScript",
     "Delhi NCR",
-    "Portfolio",
+    "India",
   ],
   alternates: { canonical: "/" },
   openGraph: {
-    type: "website",
+    type: "profile",
     locale: "en_IN",
     url: siteConfig.url,
-    siteName: `${siteConfig.name} — ${siteConfig.role}`,
-    title: `${siteConfig.name} — ${siteConfig.role}`,
+    siteName: siteConfig.name,
+    title: seoTitle,
     description: siteConfig.description,
+    firstName: siteConfig.firstName,
+    lastName: siteConfig.lastName,
+    username: "parasherdhruv",
     images: [
       {
         url: "/opengraph-image",
         width: 1200,
         height: 630,
-        alt: `${siteConfig.name}, ${siteConfig.role}`,
+        alt: `${siteConfig.name} — ${siteConfig.title}`,
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: `${siteConfig.name} — ${siteConfig.role}`,
+    title: seoTitle,
     description: siteConfig.description,
+    creator: "@parasherdhruv",
     images: ["/opengraph-image"],
+  },
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "32x32" },
+    ],
+    apple: [{ url: "/apple-icon.svg", type: "image/svg+xml" }],
   },
   robots: {
     index: true,
@@ -87,8 +105,11 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#070708",
-  colorScheme: "dark",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#f4f5f8" },
+    { media: "(prefers-color-scheme: dark)", color: "#070709" },
+  ],
+  colorScheme: "light dark",
   width: "device-width",
   initialScale: 1,
 };
@@ -97,9 +118,12 @@ const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: siteConfig.name,
-  jobTitle: siteConfig.role,
+  givenName: siteConfig.firstName,
+  familyName: siteConfig.lastName,
+  jobTitle: siteConfig.title,
   description: siteConfig.description,
   url: siteConfig.url,
+  email: `mailto:${siteConfig.email}`,
   address: {
     "@type": "PostalAddress",
     addressLocality: "Delhi NCR",
@@ -115,7 +139,12 @@ const personSchema = {
     "MongoDB",
     "GraphQL",
     "AWS",
+    "Full-Stack Development",
   ],
+  worksFor: {
+    "@type": "Organization",
+    name: "Qloron Pvt. Ltd.",
+  },
   sameAs: [siteConfig.socials.github, siteConfig.socials.linkedin],
 };
 
@@ -125,27 +154,35 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      data-theme="midnight"
+      data-mode="dark"
       className={`${interTight.variable} ${instrumentSerif.variable} ${jetbrainsMono.variable}`}
       suppressHydrationWarning
     >
-      <body className="noise relative min-h-svh bg-ink text-mist antialiased">
-        <a
-          href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-mist focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-ink"
-        >
-          Skip to content
-        </a>
-        <ScrollProgress />
-        <AmbientGlow />
-        <AmbientCanvas />
-        <Navbar />
-        <main id="main" className="relative z-10">
-          {children}
-        </main>
-        <div className="relative z-10">
-          <Footer />
-        </div>
-        <BackToTop />
+      <head>
+        <ThemeScript />
+      </head>
+      <body className="noise relative min-h-svh bg-background text-foreground antialiased">
+        <ThemeProvider>
+          <a
+            href="#main"
+            className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-foreground focus:px-4 focus:py-2 focus:text-sm focus:font-medium focus:text-background"
+          >
+            Skip to content
+          </a>
+          <PageLoader />
+          <ScrollProgress />
+          <AmbientGlow />
+          <AmbientCanvas />
+          <Navbar />
+          <main id="main" className="relative z-10">
+            {children}
+          </main>
+          <div className="relative z-10">
+            <Footer />
+          </div>
+          <BackToTop />
+        </ThemeProvider>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}

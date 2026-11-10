@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where([data-mode="dark"], [data-mode="dark"] *));
+
 @theme inline {
   --font-sans: var(--font-inter-tight), ui-sans-serif, system-ui, -apple-system,
     "Segoe UI", sans-serif;
@@ -8,17 +10,32 @@
   --font-mono: var(--font-jetbrains-mono), ui-monospace, "SFMono-Regular", Menlo,
     monospace;
 
-  --color-ink: #070708;
-  --color-ink-soft: #0a0a0d;
-  --color-panel: #0e0e12;
-  --color-panel-2: #131318;
-  --color-line: #1d1d24;
-  --color-mist: #f4f4f6;
-  --color-muted: #9898a4;
-  --color-faint: #6a6a76;
-  --color-violet: #8f7cff;
-  --color-blue: #5c8dff;
-  --color-cyan: #64e3ff;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-surface-3: var(--surface-3);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-muted: var(--muted);
+  --color-subtle: var(--subtle);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-contrast: var(--accent-contrast);
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+
+  /* Legacy aliases — all token-backed, so every theme updates them together. */
+  --color-ink: var(--background);
+  --color-ink-soft: var(--surface);
+  --color-panel: var(--surface);
+  --color-panel-2: var(--surface-2);
+  --color-line: var(--border);
+  --color-mist: var(--foreground);
+  --color-faint: var(--subtle);
+  --color-violet: var(--accent);
+  --color-blue: var(--accent-2);
+  --color-cyan: var(--accent-2);
 
   --animate-marquee: marquee 42s linear infinite;
   --animate-marquee-reverse: marquee-reverse 42s linear infinite;
@@ -80,13 +97,253 @@
 
 @layer base {
   :root {
-    --background: #070708;
-    --foreground: #f4f4f6;
+    --background: #070709;
+    --surface: #0c0c11;
+    --surface-2: #121218;
+    --surface-3: #18181f;
+    --foreground: #f5f5f7;
+    --muted: #a6a6b4;
+    --subtle: #73737f;
+    --border: #212128;
+    --border-strong: #33333c;
+    --accent: #7c8cff;
+    --accent-2: #4d9dff;
+    --accent-contrast: #07070c;
+    --success: #34d399;
+    --danger: #fb7185;
+
+    --accent-soft: color-mix(in oklab, var(--accent) 12%, transparent);
+    --accent-line: color-mix(in oklab, var(--accent) 42%, transparent);
+    --success-soft: color-mix(in oklab, var(--success) 12%, transparent);
+    --danger-soft: color-mix(in oklab, var(--danger) 12%, transparent);
+
+    --glow-a: color-mix(in oklab, var(--accent) 28%, transparent);
+    --glow-b: color-mix(in oklab, var(--accent-2) 24%, transparent);
+    --glow-c: color-mix(in oklab, var(--accent) 15%, transparent);
+    --glow-top: color-mix(in oklab, var(--foreground) 5%, transparent);
+
+    color-scheme: dark;
+  }
+
+  /* ===========================================================
+     MIDNIGHT — charcoal, electric blue, off-white
+     =========================================================== */
+  [data-theme="midnight"][data-mode="dark"] {
+    --background: #070709;
+    --surface: #0c0c11;
+    --surface-2: #121218;
+    --surface-3: #191920;
+    --foreground: #f4f4f7;
+    --muted: #a4a4b2;
+    --subtle: #73737f;
+    --border: #212128;
+    --border-strong: #33333c;
+    --accent: #7c8cff;
+    --accent-2: #4d9dff;
+    --accent-contrast: #07070c;
+    --success: #34d399;
+    --danger: #fb7185;
+  }
+
+  [data-theme="midnight"][data-mode="light"] {
+    --background: #f4f5f8;
+    --surface: #ffffff;
+    --surface-2: #eceef4;
+    --surface-3: #e2e5ee;
+    --foreground: #101016;
+    --muted: #565667;
+    --subtle: #7b7b8c;
+    --border: #d9dce7;
+    --border-strong: #bfc4d4;
+    --accent: #3f4fdc;
+    --accent-2: #2563eb;
+    --accent-contrast: #ffffff;
+    --success: #047857;
+    --danger: #dc2626;
+  }
+
+  /* ===========================================================
+     OCEAN — deep navy, cyan, teal
+     =========================================================== */
+  [data-theme="ocean"][data-mode="dark"] {
+    --background: #030e15;
+    --surface: #061923;
+    --surface-2: #08212d;
+    --surface-3: #0b2a38;
+    --foreground: #e7fbfc;
+    --muted: #8fb6c0;
+    --subtle: #5f818c;
+    --border: #123341;
+    --border-strong: #1c4a5c;
+    --accent: #22d3ee;
+    --accent-2: #2dd4bf;
+    --accent-contrast: #021016;
+    --success: #34d399;
+    --danger: #fb7185;
+  }
+
+  [data-theme="ocean"][data-mode="light"] {
+    --background: #eef8fa;
+    --surface: #ffffff;
+    --surface-2: #e0f1f4;
+    --surface-3: #d2eaee;
+    --foreground: #062a33;
+    --muted: #3e6b75;
+    --subtle: #5f7f87;
+    --border: #c6e2e7;
+    --border-strong: #a3cdd5;
+    --accent: #0e7490;
+    --accent-2: #0f766e;
+    --accent-contrast: #ffffff;
+    --success: #047857;
+    --danger: #dc2626;
+  }
+
+  /* ===========================================================
+     ELECTRIC VIOLET — graphite, purple, violet
+     =========================================================== */
+  [data-theme="violet"][data-mode="dark"] {
+    --background: #0a0812;
+    --surface: #110d1d;
+    --surface-2: #181126;
+    --surface-3: #201733;
+    --foreground: #f3efff;
+    --muted: #b0a6c9;
+    --subtle: #7d7396;
+    --border: #2a2340;
+    --border-strong: #3d3358;
+    --accent: #a78bfa;
+    --accent-2: #8b5cf6;
+    --accent-contrast: #0a0812;
+    --success: #34d399;
+    --danger: #fb7185;
+  }
+
+  [data-theme="violet"][data-mode="light"] {
+    --background: #f7f5fd;
+    --surface: #ffffff;
+    --surface-2: #efeafb;
+    --surface-3: #e5ddf8;
+    --foreground: #1b1230;
+    --muted: #5e5478;
+    --subtle: #7e749a;
+    --border: #ded4f2;
+    --border-strong: #c6b7e8;
+    --accent: #7c3aed;
+    --accent-2: #9333ea;
+    --accent-contrast: #ffffff;
+    --success: #047857;
+    --danger: #dc2626;
+  }
+
+  /* ===========================================================
+     EMERALD — deep graphite, emerald green
+     =========================================================== */
+  [data-theme="emerald"][data-mode="dark"] {
+    --background: #07100c;
+    --surface: #0b1712;
+    --surface-2: #10211a;
+    --surface-3: #162b22;
+    --foreground: #ecfdf5;
+    --muted: #a2c4b5;
+    --subtle: #6f9282;
+    --border: #1f3a2f;
+    --border-strong: #2d5544;
+    --accent: #34d399;
+    --accent-2: #10b981;
+    --accent-contrast: #04120c;
+    --success: #34d399;
+    --danger: #fb7185;
+  }
+
+  [data-theme="emerald"][data-mode="light"] {
+    --background: #f2faf6;
+    --surface: #ffffff;
+    --surface-2: #e6f4ec;
+    --surface-3: #d8ecdf;
+    --foreground: #06251a;
+    --muted: #456b5a;
+    --subtle: #688576;
+    --border: #cae6d6;
+    --border-strong: #a7d3ba;
+    --accent: #059669;
+    --accent-2: #0d9488;
+    --accent-contrast: #ffffff;
+    --success: #047857;
+    --danger: #dc2626;
+  }
+
+  /* ===========================================================
+     AMBER — dark charcoal, warm amber, muted gold
+     =========================================================== */
+  [data-theme="amber"][data-mode="dark"] {
+    --background: #100d09;
+    --surface: #18130d;
+    --surface-2: #211910;
+    --surface-3: #2b2115;
+    --foreground: #fdf6ea;
+    --muted: #c4b39a;
+    --subtle: #8f8069;
+    --border: #3a2e1e;
+    --border-strong: #57452d;
+    --accent: #f5b544;
+    --accent-2: #d99a2b;
+    --accent-contrast: #120d06;
+    --success: #34d399;
+    --danger: #fb7185;
+  }
+
+  [data-theme="amber"][data-mode="light"] {
+    --background: #fbf7ef;
+    --surface: #ffffff;
+    --surface-2: #f4ecdd;
+    --surface-3: #ebdfc9;
+    --foreground: #2a2113;
+    --muted: #6b5c43;
+    --subtle: #8a7a60;
+    --border: #e4d6bc;
+    --border-strong: #cdb894;
+    --accent: #b45309;
+    --accent-2: #a16207;
+    --accent-contrast: #ffffff;
+    --success: #047857;
+    --danger: #dc2626;
+  }
+
+  /* Mode-level surfaces, shadows, and ambient strength. */
+  [data-mode="dark"] {
+    --glass-bg: color-mix(in oklab, #ffffff 5%, transparent);
+    --glass-border: color-mix(in oklab, #ffffff 10%, transparent);
+    --grid-line: color-mix(in oklab, #ffffff 4.5%, transparent);
+    --dot-color: color-mix(in oklab, #ffffff 13%, transparent);
+    --noise-opacity: 0.035;
+    --ambient-opacity: 1;
+    --shadow-card: 0 40px 100px -60px rgba(0, 0, 0, 0.95);
+    --shadow-soft: 0 18px 45px -28px rgba(0, 0, 0, 0.8);
+    --scrollbar-track: #08080b;
+    --scrollbar-thumb: #2a2a33;
+  }
+
+  [data-mode="light"] {
+    --glass-bg: color-mix(in oklab, #ffffff 72%, transparent);
+    --glass-border: color-mix(in oklab, #0b1020 10%, transparent);
+    --grid-line: color-mix(in oklab, #0b1020 5%, transparent);
+    --dot-color: color-mix(in oklab, #0b1020 11%, transparent);
+    --noise-opacity: 0.018;
+    --ambient-opacity: 0.55;
+    --shadow-card: 0 30px 70px -45px rgba(15, 23, 42, 0.35);
+    --shadow-soft: 0 14px 35px -24px rgba(15, 23, 42, 0.22);
+    --scrollbar-track: var(--surface-2);
+    --scrollbar-thumb: var(--border-strong);
+    color-scheme: light;
+  }
+
+  [data-mode="dark"] {
     color-scheme: dark;
   }
 
   * {
-    border-color: var(--color-line);
+    border-color: var(--border);
   }
 
   html {
@@ -96,22 +353,23 @@
   }
 
   body {
-    background-color: var(--color-ink);
-    color: var(--color-mist);
+    background-color: var(--background);
+    color: var(--foreground);
     font-family: var(--font-sans);
     font-feature-settings: "ss01", "cv11", "cv02";
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: clip;
+    transition: background-color 0.4s ease, color 0.4s ease;
   }
 
   ::selection {
-    background: color-mix(in oklab, var(--color-violet) 42%, transparent);
-    color: #fff;
+    background: color-mix(in oklab, var(--accent) 38%, transparent);
+    color: var(--foreground);
   }
 
   :focus-visible {
-    outline: 2px solid var(--color-violet);
+    outline: 2px solid var(--accent);
     outline-offset: 3px;
     border-radius: 2px;
   }
@@ -132,15 +390,24 @@
     height: 10px;
   }
   ::-webkit-scrollbar-track {
-    background: #08080a;
+    background: var(--scrollbar-track);
   }
   ::-webkit-scrollbar-thumb {
-    background: #26262e;
+    background: var(--scrollbar-thumb);
     border-radius: 999px;
-    border: 2px solid #08080a;
+    border: 2px solid var(--scrollbar-track);
   }
   ::-webkit-scrollbar-thumb:hover {
-    background: #35353f;
+    background: var(--border-strong);
+  }
+
+  .theme-transitioning *,
+  .theme-transitioning *::before,
+  .theme-transitioning *::after {
+    transition-property: background-color, border-color, color, fill, stroke,
+      box-shadow !important;
+    transition-duration: 320ms !important;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1) !important;
   }
 }
 
@@ -165,7 +432,7 @@
   }
 
   .hairline {
-    border-top: 1px solid var(--color-line);
+    border-top: 1px solid var(--border);
   }
 
   .section-label {
@@ -173,16 +440,16 @@
     font-size: 0.6875rem;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--color-faint);
+    color: var(--subtle);
   }
 
   .text-gradient {
     background: linear-gradient(
       100deg,
-      #ffffff 0%,
-      #cfcaff 42%,
-      #8f7cff 68%,
-      #5c8dff 100%
+      var(--foreground) 0%,
+      color-mix(in oklab, var(--accent) 55%, var(--foreground)) 44%,
+      var(--accent) 68%,
+      var(--accent-2) 100%
     );
     -webkit-background-clip: text;
     background-clip: text;
@@ -190,7 +457,11 @@
   }
 
   .text-gradient-soft {
-    background: linear-gradient(180deg, #ffffff 20%, #a5a5b4 100%);
+    background: linear-gradient(
+      180deg,
+      var(--foreground) 20%,
+      color-mix(in oklab, var(--foreground) 55%, var(--muted)) 100%
+    );
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -204,31 +475,24 @@
   }
 
   .glass {
-    background: linear-gradient(
-      180deg,
-      rgba(255, 255, 255, 0.055) 0%,
-      rgba(255, 255, 255, 0.02) 100%
-    );
+    background: var(--glass-bg);
     backdrop-filter: blur(18px) saturate(140%);
     -webkit-backdrop-filter: blur(18px) saturate(140%);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--glass-border);
   }
 
   .grid-lines {
     background-image: linear-gradient(
         to right,
-        rgba(255, 255, 255, 0.045) 1px,
+        var(--grid-line) 1px,
         transparent 1px
       ),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+      linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
     background-size: 88px 88px;
   }
 
   .dot-grid {
-    background-image: radial-gradient(
-      rgba(255, 255, 255, 0.12) 1px,
-      transparent 1px
-    );
+    background-image: radial-gradient(var(--dot-color) 1px, transparent 1px);
     background-size: 22px 22px;
   }
 
@@ -238,10 +502,10 @@
     inset: 0;
     z-index: 90;
     pointer-events: none;
-    opacity: 0.045;
+    opacity: var(--noise-opacity);
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     background-size: 180px 180px;
-    mix-blend-mode: overlay;
+    mix-blend-mode: soft-light;
   }
 
   .glow-border {
@@ -256,9 +520,9 @@
     padding: 1px;
     background: linear-gradient(
       140deg,
-      rgba(255, 255, 255, 0.22),
-      rgba(143, 124, 255, 0.12) 35%,
-      rgba(255, 255, 255, 0) 60%
+      color-mix(in oklab, var(--foreground) 22%, transparent),
+      color-mix(in oklab, var(--accent) 16%, transparent) 35%,
+      transparent 62%
     );
     -webkit-mask:
       linear-gradient(#000 0 0) content-box,
@@ -291,6 +555,34 @@
   .link-underline:hover::after {
     transform: scaleX(1);
     transform-origin: left;
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .ambient-glow-a {
+    background: radial-gradient(circle, var(--glow-a), transparent 62%);
+  }
+
+  .ambient-glow-b {
+    background: radial-gradient(circle, var(--glow-b), transparent 64%);
+  }
+
+  .ambient-glow-c {
+    background: radial-gradient(circle, var(--glow-c), transparent 66%);
+  }
+
+  .ambient-top {
+    background: radial-gradient(
+      ellipse at 50% -10%,
+      var(--glow-top),
+      transparent 55%
+    );
   }
 }
 

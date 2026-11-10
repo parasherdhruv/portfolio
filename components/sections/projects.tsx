@@ -38,8 +38,8 @@ export function Projects() {
             description="Five projects across commerce, AI tooling, public infrastructure, and backend systems. Previews are custom-built interface mockups."
           />
           <Reveal delay={0.1} className="shrink-0">
-            <div className="flex items-center gap-2 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-faint">
-              <span className="size-1.5 rounded-full bg-violet" aria-hidden="true" />
+            <div className="flex items-center gap-2 font-mono text-[0.6875rem] uppercase tracking-[0.14em] text-subtle">
+              <span className="size-1.5 rounded-full bg-accent" aria-hidden="true" />
               05 Projects
             </div>
           </Reveal>
@@ -61,21 +61,20 @@ export function Projects() {
                       aria-pressed={isActive}
                       className={cn(
                         "group relative flex w-full items-start gap-4 rounded-xl px-3 py-4 text-left transition-colors duration-300 sm:px-4 sm:py-5",
-                        isActive ? "bg-white/[0.035]" : "hover:bg-white/[0.02]",
+                        isActive ? "bg-surface-2/70" : "hover:bg-surface/60",
                       )}
                     >
                       {isActive ? (
                         <motion.span
                           layoutId="project-rail"
-                          className="absolute inset-y-2 left-0 w-[2px] rounded-full"
-                          style={{ background: project.accent }}
+                          className="absolute inset-y-2 left-0 w-[2px] rounded-full bg-accent"
                           transition={{ type: "spring", stiffness: 400, damping: 34 }}
                         />
                       ) : null}
                       <span
                         className={cn(
                           "mt-1 font-mono text-[0.625rem] tracking-[0.12em] transition-colors duration-300",
-                          isActive ? "text-mist/70" : "text-faint",
+                          isActive ? "text-foreground/70" : "text-subtle",
                         )}
                       >
                         {project.index}
@@ -85,7 +84,7 @@ export function Projects() {
                           <span
                             className={cn(
                               "text-[1.05rem] font-medium tracking-[-0.02em] transition-colors duration-300 sm:text-lg",
-                              isActive ? "text-mist" : "text-mist/55",
+                              isActive ? "text-foreground" : "text-muted",
                             )}
                           >
                             {project.name}
@@ -94,8 +93,8 @@ export function Projects() {
                             className={cn(
                               "size-4 shrink-0 transition-all duration-300",
                               isActive
-                                ? "translate-x-0 translate-y-0 text-mist opacity-100"
-                                : "-translate-x-1 translate-y-1 text-faint opacity-0",
+                                ? "translate-x-0 translate-y-0 text-foreground opacity-100"
+                                : "-translate-x-1 translate-y-1 text-subtle opacity-0",
                             )}
                             aria-hidden="true"
                           />
@@ -103,12 +102,12 @@ export function Projects() {
                         <span
                           className={cn(
                             "mt-1 block text-[0.8125rem] leading-relaxed transition-colors duration-300",
-                            isActive ? "text-muted" : "text-faint",
+                            isActive ? "text-muted" : "text-subtle",
                           )}
                         >
                           {project.tagline}
                         </span>
-                        <span className="mt-2 block font-mono text-[0.5625rem] uppercase tracking-[0.13em] text-faint">
+                        <span className="mt-2 block font-mono text-[0.5625rem] uppercase tracking-[0.13em] text-subtle">
                           {project.role}
                         </span>
                       </span>
@@ -118,7 +117,7 @@ export function Projects() {
               </div>
 
               <div className="mt-6 flex justify-end">
-                <span className="inline-flex items-center gap-2 font-mono text-[0.5625rem] uppercase tracking-[0.14em] text-faint">
+                <span className="inline-flex items-center gap-2 font-mono text-[0.5625rem] uppercase tracking-[0.14em] text-subtle">
                   <Plus className="size-3" aria-hidden="true" />
                   Hover to preview
                 </span>
@@ -134,7 +133,7 @@ export function Projects() {
                     background: `radial-gradient(circle at 50% 40%, ${projects[active].accent}22, transparent 66%)`,
                   }}
                 />
-                <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#08080c] shadow-[0_50px_140px_-60px_rgba(0,0,0,1)]">
+                <div className="overflow-hidden rounded-2xl border border-border bg-surface shadow-card">
                   <div className="relative aspect-[16/11]">
                     <AnimatePresence mode="wait" initial={false}>
                       <motion.div
@@ -171,24 +170,22 @@ export function Projects() {
                     {projects[active].stack.map((item) => (
                       <span
                         key={item}
-                        className="rounded-full border border-white/[0.08] bg-white/[0.025] px-2.5 py-1 font-mono text-[0.5625rem] uppercase tracking-[0.08em] text-muted"
+                        className="rounded-full border border-border bg-surface-2/50 px-2.5 py-1 font-mono text-[0.5625rem] uppercase tracking-[0.08em] text-muted"
                       >
                         {item}
                       </span>
                     ))}
                   </div>
 
-                  {/* Outcomes */}
                   {projects[active].outcomes.length > 0 && (
-                    <ul className="mt-5 space-y-2 border-t border-white/[0.06] pt-5">
+                    <ul className="mt-5 space-y-2 border-t border-border/80 pt-5">
                       {projects[active].outcomes.map((outcome) => (
                         <li
                           key={outcome}
                           className="flex gap-2.5 text-[0.8125rem] leading-relaxed text-muted"
                         >
                           <span
-                            className="mt-[0.38rem] size-1 shrink-0 rounded-full"
-                            style={{ background: `${projects[active].accent}aa` }}
+                            className="mt-[0.38rem] size-1 shrink-0 rounded-full bg-accent/80"
                             aria-hidden="true"
                           />
                           {outcome}
@@ -197,7 +194,6 @@ export function Projects() {
                     </ul>
                   )}
 
-                  {/* Project links — only rendered when URLs are provided */}
                   {(projects[active].links.live || projects[active].links.repo) && (
                     <div className="mt-5 flex flex-wrap gap-2.5">
                       {projects[active].links.live && (
@@ -206,7 +202,7 @@ export function Projects() {
                           target="_blank"
                           rel="noreferrer noopener"
                           aria-label={`View live demo of ${projects[active].name}`}
-                          className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.09] px-4 py-2 text-[0.75rem] text-muted transition-all duration-300 hover:border-white/20 hover:text-mist"
+                          className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-2 text-[0.75rem] text-muted transition-all duration-300 hover:border-border-strong hover:text-foreground"
                         >
                           <ExternalLink className="size-3" aria-hidden="true" />
                           Live demo
@@ -218,7 +214,7 @@ export function Projects() {
                           target="_blank"
                           rel="noreferrer noopener"
                           aria-label={`View repository for ${projects[active].name}`}
-                          className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.09] px-4 py-2 text-[0.75rem] text-muted transition-all duration-300 hover:border-white/20 hover:text-mist"
+                          className="inline-flex items-center gap-1.5 rounded-full border border-border px-4 py-2 text-[0.75rem] text-muted transition-all duration-300 hover:border-border-strong hover:text-foreground"
                         >
                           <Github className="size-3" aria-hidden="true" />
                           Repository
@@ -275,9 +271,9 @@ function ProjectCard({
       <CardWrapper>
         <article
           ref={ref}
-          className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.07] bg-panel/40 transition-colors duration-500 hover:border-white/[0.14]"
+          className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-surface/50 transition-colors duration-500 hover:border-border-strong"
         >
-          <div className="relative aspect-[16/10] overflow-hidden border-b border-white/[0.06]">
+          <div className="relative aspect-[16/10] overflow-hidden border-b border-border/80">
             <motion.div style={{ y }} className="absolute inset-[-4%]">
               <div className="h-full w-full transition-transform duration-700 ease-out group-hover:scale-[1.03]">
                 <ProjectMockupView mockup={project.mockup} accent={project.accent} />
@@ -285,7 +281,7 @@ function ProjectCard({
             </motion.div>
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-panel/60 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+              className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
             />
             <span
               aria-hidden="true"
@@ -298,7 +294,7 @@ function ProjectCard({
 
           <div className="flex flex-1 flex-col p-5">
             <div className="flex items-center justify-between">
-              <span className="font-mono text-[0.5625rem] tracking-[0.14em] text-faint">
+              <span className="font-mono text-[0.5625rem] tracking-[0.14em] text-subtle">
                 {project.index}
               </span>
               <span
@@ -307,18 +303,17 @@ function ProjectCard({
                 aria-hidden="true"
               />
             </div>
-            <h3 className="mt-3 text-base font-medium tracking-[-0.02em] text-mist">
+            <h3 className="mt-3 text-base font-medium tracking-[-0.02em] text-foreground">
               {project.name}
             </h3>
-            <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-faint">
+            <p className="mt-1.5 text-[0.8125rem] leading-relaxed text-subtle">
               {project.tagline}
             </p>
             <ul className="mt-4 space-y-1.5">
               {project.highlights.slice(0, 2).map((item) => (
                 <li key={item} className="flex gap-2 text-[0.75rem] leading-relaxed text-muted">
                   <span
-                    className="mt-[0.4rem] size-1 shrink-0 rounded-full"
-                    style={{ background: `${project.accent}aa` }}
+                    className="mt-[0.4rem] size-1 shrink-0 rounded-full bg-accent/70"
                     aria-hidden="true"
                   />
                   {item}
@@ -330,7 +325,7 @@ function ProjectCard({
                 {project.stack.slice(0, 3).map((item) => (
                   <span
                     key={item}
-                    className="rounded-full border border-white/[0.07] px-2 py-0.5 font-mono text-[0.5rem] uppercase tracking-[0.08em] text-faint"
+                    className="rounded-full border border-border px-2 py-0.5 font-mono text-[0.5rem] uppercase tracking-[0.08em] text-subtle"
                   >
                     {item}
                   </span>
@@ -338,7 +333,7 @@ function ProjectCard({
               </div>
               {project.links.live && (
                 <ArrowUpRight
-                  className="size-3.5 shrink-0 text-faint transition-colors duration-300 group-hover:text-mist"
+                  className="size-3.5 shrink-0 text-subtle transition-colors duration-300 group-hover:text-foreground"
                   aria-hidden="true"
                 />
               )}

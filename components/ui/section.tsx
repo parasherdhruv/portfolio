@@ -18,7 +18,7 @@ export function Section({
       id={id}
       className={cn(
         "relative scroll-mt-24 py-24 sm:py-28 lg:py-36",
-        bordered && "border-t border-line",
+        bordered && "border-t border-border",
         className,
       )}
     >
@@ -53,12 +53,12 @@ export function SectionHeading({
       <Reveal>
         <div className="flex items-center gap-3">
           <span className="section-label">{index}</span>
-          <span className="h-px w-8 bg-line" aria-hidden="true" />
+          <span className="h-px w-8 bg-border" aria-hidden="true" />
           <span className="section-label text-muted">{label}</span>
         </div>
       </Reveal>
       <Reveal delay={0.06}>
-        <h2 className="max-w-3xl text-[clamp(2rem,4.2vw,3.6rem)] font-medium leading-[1.02] tracking-[-0.04em] text-mist">
+        <h2 className="max-w-3xl text-[clamp(2rem,4.2vw,3.6rem)] font-medium leading-[1.02] tracking-[-0.04em] text-foreground">
           {title}
         </h2>
       </Reveal>
